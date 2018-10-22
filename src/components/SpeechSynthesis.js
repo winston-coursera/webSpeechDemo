@@ -14,7 +14,7 @@ class SpeechSynthesis extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.voices = speechSynthesis.getVoiceList();
   }
 
@@ -28,9 +28,8 @@ class SpeechSynthesis extends Component {
     speechSynthesis.speak(speakData);
   }
 
-  updateTextbox = (event) => {
-    this.setState({ text: event.target.value });
-  }
+  updateTextbox = (event) => this.setState({ text: event.target.value });
+  updateVoice = event => this.setState({ voice: event.target.value })
 
   render() {
     const { voices, state } = this;
@@ -42,7 +41,7 @@ class SpeechSynthesis extends Component {
         {
           voices &&
           voices.length &&
-          <VoiceDropdown voices={voices} />
+          <VoiceDropdown voices={voices} onSelect={this.updateVoice} />
         }
         <button onClick={this.onClick}>
           Say it!
